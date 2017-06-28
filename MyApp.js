@@ -6,6 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
+import ProfilScreen from './screens/ProfilScreen';
+
 
 
 /*
@@ -21,7 +23,7 @@ export default class MyApp extends React.Component {
 */
 const MyPeopleScreen = ({ navigation }) => (
     <ScrollView style={styles.container2}>
-        <Text>People Tab</Text>
+        <Text>People Tab </Text>
     </ScrollView>          
 );
 
@@ -77,14 +79,14 @@ const MyApp = TabNavigator(
       path: '', 
     },
     People: {
-      screen: MyPeopleScreen,
+      screen: ProfilScreen,
       path: 'cart',
     },
     Chat: {
       screen: MyChatScreen,
       path: 'chat',
     },
-    Settings: {
+    Settings: { 
       screen: MySettingsScreen,
       path: 'settings',
     },

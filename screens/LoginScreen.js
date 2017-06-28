@@ -3,6 +3,8 @@ import React from 'react';
 import { View, Button, StyleSheet, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { connect, Dispatch } from 'react-redux';
+
 class LoginScreen extends React.Component {
     constructor(props){
         super(props);
@@ -30,4 +32,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export function mapStateToProps(state) {
+  return {
+    //isAuthenticated : state.auth.isAuthenticated,
+    //isAuthenticating : state.auth.isAuthenticating,
+  };
+}
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    // TODO voir la bonne syntaxe pour ne pas passer le dispatch en paramètre
+    //onLogin: () => dispatch(actions.login(dispatch)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+//export default LoginScreen;

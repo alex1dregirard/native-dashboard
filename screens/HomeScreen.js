@@ -1,5 +1,9 @@
 import React from 'react';
 
+import { connect, Dispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../actions/auth';
+
 import { ScrollView, Text, StyleSheet, Platform, Button, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -40,18 +44,23 @@ class HomeScreen extends React.Component {
             resources: [
             'https://outlook.office365.com',
             'https://graph.microsoft.com'
-            ]})
+            ]}) 
         
-            return <ADLoginView
-                    context={ReactNativeAD.getContext(CLIENT_ID)}
-                    hideAfterLogin={true}
-                    onSuccess={this.onLoginSuccess.bind(this)}/>
+            return (
+                <ScrollView style={styles.container}>
+                    <ADLoginView
+                        context={ReactNativeAD.getContext(CLIENT_ID)}
+                        hideAfterLogin={true}
+                        onSuccess={this.onLoginSuccess.bind(this)}/>
+                    <Text>Home </Text>
+                </ScrollView>
+            )
     }
 
     onLoginSuccess(credentials) {
-        // Alert.alert('Login success ' + credentials['https://graph.microsoft.com'].access_token);
         var token = credentials['https://graph.microsoft.com'].access_token;
-
+        this.props.actions.loginSuccess(token);
+        /*
         var client = Client.init({
             debugLogging: false,
             authProvider: (done) => {
@@ -64,11 +73,12 @@ class HomeScreen extends React.Component {
             .get((err, res) => {
             if (!err) {
                 Alert.alert('graph success ' + res.displayName );
+                this.props.actions.loginSuccess();
             }else {
                 Alert.alert('graph ko ' + err.message );
             }
         });
-
+        */
         //console.log(credentials[https://outlook.office365.com].access_token)
             // use the access token ..
     }
@@ -91,4 +101,18 @@ const styles = StyleSheet.create({
   },  
 });
 
-export default HomeScreen;
+//export default HomeScreen;
+
+export function mapStateToProps(state) {
+  return {
+    //isAuthenticated : state.auth.isAuthenticated,
+    //isAuthenticating : state.auth.isAuthenticating,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    actions : bindActionCreators(actionCreators, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+//export default LoginScreen;
